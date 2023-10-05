@@ -20,7 +20,6 @@ const HomeRoute = (props) => {
 
   return (
     <div className="home-route">
-      {Object.values(favorite).includes(true)}
       <TopNavigation topics={topics} favorite={favorite}/>
       <PhotoList photos={photos} toggleFavorite={toggleFavorite} favorite={favorite}/>
     </div>
