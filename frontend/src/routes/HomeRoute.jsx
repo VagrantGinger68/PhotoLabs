@@ -7,21 +7,12 @@ import PhotoList from 'components/PhotoList';
 
 const HomeRoute = (props) => {
 
-  const { photos, topics } = props;
-
-  const [favorite, setFavorite] = useState({});
-
-  const toggleFavorite = (photoId) => {
-    setFavorite((prev) => ({
-      ...prev,
-      [photoId]: !prev[photoId]
-    }))
-  };
+  const { photos, topics, openPhotoView, favorite, toggleFavorite } = props;
 
   return (
     <div className="home-route">
       <TopNavigation topics={topics} favorite={favorite}/>
-      <PhotoList photos={photos} toggleFavorite={toggleFavorite} favorite={favorite}/>
+      <PhotoList photos={photos} toggleFavorite={toggleFavorite} favorite={favorite} openPhotoView={openPhotoView}/>
     </div>
   );
 };
