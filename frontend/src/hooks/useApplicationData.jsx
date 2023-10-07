@@ -1,19 +1,41 @@
-const [viewPhoto, setViewPhoto] = useState();
+import { useState } from 'react';
 
-const openPhotoView = (photo) => {
-  setViewPhoto({photo})
+const useApplicationData = () => {
+  const [state, setState] = useState({
+    favorite: {},
+    photoSelected: null,
+  });
+
+  const updateToFavPhotoIds = (photoId) => {
+    setState((prevState) => ({
+      ...prevState,
+      favorite: {
+        ...prevState.favorite,
+        [photoId]: !prevState.favorite[photoId],
+      },
+    }));
+  };
+
+  const setPhotoSelected = (photo) => {
+    setState((prevState) => ({
+      ...prevState,
+      photoSelected: photo,
+    }));
+  };
+
+  const onClosePhotoDetailsModal = () => {
+    setState((prevState) => ({
+      ...prevState,
+      photoSelected:null,
+    }));
+  };
+
+  return {
+    state,
+    updateToFavPhotoIds,
+    setPhotoSelected,
+    onClosePhotoDetailsModal,
+  };
 };
 
-const closePhotoView = () => {
-  setViewPhoto()
-}
-
-const [favorite, setFavorite] = useState({});
-
-const toggleFavorite = (photoId) => {
-  setFavorite((prev) => (
-    {
-    ...prev,
-    [photoId]: !prev[photoId]
-  }))
-};
+export default useApplicationData;
