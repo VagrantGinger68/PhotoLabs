@@ -1,37 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
-import './App.scss';
-import HomeRoute from 'routes/HomeRoute';
-import photos from 'mocks/photos';
-import topics from 'mocks/topics';
-import PhotoDetailsModal from 'routes/PhotoDetailsModal';
+import "./App.scss";
+import HomeRoute from "routes/HomeRoute";
+import photos from "mocks/photos";
+import topics from "mocks/topics";
+import PhotoDetailsModal from "routes/PhotoDetailsModal";
+import useApplicationData from "hooks/useApplicationData";
 
 const App = () => {
 
-  const [viewPhoto, setViewPhoto] = useState();
-
-  const openPhotoView = (photo) => {
-    setViewPhoto({photo})
-  };
-
-  const closePhotoView = () => {
-    setViewPhoto()
-  }
-
-  const [favorite, setFavorite] = useState({});
-
-  const toggleFavorite = (photoId) => {
-    setFavorite((prev) => (
-      {
-      ...prev,
-      [photoId]: !prev[photoId]
-    }))
-  };
+  const {
+    state,
+    updateToFavPhotoIds,
+    setPhotoSelected,
+    onClosePhotoDetailsModal,
+  } = useApplicationData();
 
   return (
     <div className="App">
-      <HomeRoute favorite={favorite} toggleFavorite={toggleFavorite} photos={photos} topics={topics} openPhotoView={openPhotoView}/>
-      {viewPhoto && <PhotoDetailsModal closePhotoView={closePhotoView} viewPhoto={viewPhoto} favorite={favorite} toggleFavorite={toggleFavorite} />}
+      <HomeRoute
+        favorite={state.favorite}
+        toggleFavorite={updateToFavPhotoIds}
+        photos={photos}
+        topics={topics}
+        openPhotoView={setPhotoSelected}
+      />
+      {state.photoSelected && (
+        <PhotoDetailsModal
+          closePhotoView={onClosePhotoDetailsModal}
+          viewPhoto={state.photoSelected}
+          favorite={state.favorite}
+          toggleFavorite={updateToFavPhotoIds}
+        />
+      )}
     </div>
   );
 };
