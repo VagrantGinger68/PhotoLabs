@@ -8,7 +8,8 @@ import PhotoFavButton from 'components/PhotoFavButton';
 const PhotoDetailsModal = (props) => {
   const { closePhotoView, viewPhoto, favorite, toggleFavorite } = props;
 
-  const photo = viewPhoto.photo;
+  const photo = viewPhoto;
+
   const similarPhotosArr = Object.values(photo.similar_photos)
 
 
