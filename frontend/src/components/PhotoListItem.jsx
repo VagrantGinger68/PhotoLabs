@@ -4,12 +4,11 @@ import "../styles/PhotoListItem.scss";
 import PhotoFavButton from "./PhotoFavButton";
 
 const PhotoListItem = (props) => {
-  const { location, urls, user, toggleFavorite, favorite } = props;
-
+  const { location, urls, user, toggleFavorite, favorite, openPhotoView } = props;
   return (
     <div className="photo-list__item">
       <PhotoFavButton toggleFavorite={toggleFavorite} favorite={favorite}/>
-      <img className="photo-list__image" src={urls.regular} />
+      <img className="photo-list__image" src={urls.regular} onClick={openPhotoView}/>
       <div className="photo-list__user-details">
         <img className="photo-list__user-profile" src={user.profile} />
         <p className="photo-list__user-info">{user.name}
