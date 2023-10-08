@@ -5,7 +5,6 @@ import PhotoListItem from "./PhotoListItem";
 
 const PhotoList = (props) => {
   const { favorite, toggleFavorite, openPhotoView } = props;
-
   
   const photos = props.photos.map((photo) => {
     return (
