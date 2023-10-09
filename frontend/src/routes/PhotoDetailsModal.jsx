@@ -6,13 +6,18 @@ import PhotoList from "components/PhotoList";
 import PhotoFavButton from "components/PhotoFavButton";
 
 const PhotoDetailsModal = (props) => {
-  const { closePhotoView, viewPhoto, favorite, toggleFavorite } = props;
+  const { closePhotoView, viewPhoto, favorite, toggleFavorite, photoData, openPhotoView } = props;
 
   //Gets only the selected photo
   const photo = viewPhoto;
 
   //Get the similar photos from selected photo
   const similarPhotosArr = Object.values(photo.similar_photos);
+
+  const similarPhotosWithDetails = similarPhotosArr.map(photo => {
+    const photoObj = photoData.find(ph => ph.id === photo.id);
+    return photoObj;
+  })
 
   return (
     <div className="photo-details-modal">
@@ -52,9 +57,10 @@ const PhotoDetailsModal = (props) => {
           <div className="photo-details-modal__header">
             <h3>Similar Photos</h3>
             <PhotoList
-              photos={similarPhotosArr}
+              photos={similarPhotosWithDetails}
               favorite={favorite}
               toggleFavorite={toggleFavorite}
+              openPhotoView={openPhotoView}
             />
           </div>
         </div>
