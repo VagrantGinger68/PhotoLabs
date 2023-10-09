@@ -4,7 +4,7 @@ import useWow from "./useWow";
 const initialState = {
   favorite: {},
   photoSelected: null,
-  topicSelected: [],
+  topicSelected: 0,
   photoData: [],
   topicData: [],
 };
