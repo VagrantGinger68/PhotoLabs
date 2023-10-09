@@ -27,10 +27,12 @@ const App = () => {
       />
       {state.photoSelected && (
         <PhotoDetailsModal
+          photoData={state.photoData}
           closePhotoView={onClosePhotoDetailsModal}
           viewPhoto={state.photoSelected}
           favorite={state.favorite}
           toggleFavorite={updateToFavPhotoIds}
+          openPhotoView={setPhotoSelected}
         />
       )}
     </div>
