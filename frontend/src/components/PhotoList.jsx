@@ -6,6 +6,7 @@ import PhotoListItem from "./PhotoListItem";
 const PhotoList = (props) => {
   const { favorite, toggleFavorite, openPhotoView } = props;
   
+  //Loop through the photos array and make a PhotoListItem for each element
   const photos = props.photos.map((photo) => {
     return (
       <PhotoListItem

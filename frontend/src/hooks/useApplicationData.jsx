@@ -46,6 +46,7 @@ const reducer = (state, action) => {
 };
 
 const useApplicationData = () => {
+  //Say wow was added for fun (API that plays a random Owen Wilson "Wow")
   const { sayWow } = useWow();
 
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -62,6 +63,7 @@ const useApplicationData = () => {
   }, []);
   
   useEffect(() => {
+    //display the photos for a selected topic
     if (state.topicSelected) {
       fetch(`/api/topics/photos/${state.topicSelected}`)
         .then((response) => response.json())
@@ -74,6 +76,7 @@ const useApplicationData = () => {
   };
 
   const setPhotoSelected = (photo) => {
+    //Say wow was added for fun
     sayWow();
     dispatch({ type: "SET_PHOTO_SELECTED", payload: { photo } });
   };
@@ -81,11 +84,13 @@ const useApplicationData = () => {
   const setTopicSelected = (topic) => {
     document.title = `${topic.title}`
     
+    //Removes the line over the previous topic
     const topicElements = document.querySelectorAll(".top-nav-bar__topic-list span");
     topicElements.forEach((element) => {
       element.style.textDecoration = "none";
     });
   
+    //Keeps the line over the current topic to know which topic you are viewing
     const selectedTopicElement = document.querySelector(`#root > div > div > div > div.top-nav-bar__topic-list > div:nth-child(${topic.id}) > span`);
     if (selectedTopicElement) {
       selectedTopicElement.style.textDecoration = "overline";
