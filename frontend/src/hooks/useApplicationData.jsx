@@ -1,5 +1,5 @@
 import { useReducer, useEffect } from "react";
-import useWow from "./useWow";
+// import useWow from "./useWow";
 
 const initialState = {
   favorite: {},
@@ -47,7 +47,7 @@ const reducer = (state, action) => {
 
 const useApplicationData = () => {
   //Say wow was added for fun (API that plays a random Owen Wilson "Wow")
-  const { sayWow } = useWow();
+  // const { sayWow } = useWow();
 
   const [state, dispatch] = useReducer(reducer, initialState);
 
@@ -77,7 +77,7 @@ const useApplicationData = () => {
 
   const setPhotoSelected = (photo) => {
     //Say wow was added for fun
-    sayWow();
+    // sayWow();
     dispatch({ type: "SET_PHOTO_SELECTED", payload: { photo } });
   };
 
