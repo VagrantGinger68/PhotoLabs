@@ -6,7 +6,7 @@ import TopicListItem from "./TopicListItem";
 const TopicList = (props) => {
 
   const topics = props.topics.map((topic) => {
-    return <TopicListItem key={topic.id} title={topic.title} slug={topic.slug}/>
+    return <TopicListItem key={topic.id} title={topic.title} slug={topic.slug} setTopicSelected={() => props.setTopicSelected(topic)}/>
   })
   
   return (

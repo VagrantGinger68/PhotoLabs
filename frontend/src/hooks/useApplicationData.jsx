@@ -4,6 +4,7 @@ import useWow from "./useWow";
 const initialState = {
   favorite: {},
   photoSelected: null,
+  topicSelected: [],
   photoData: [],
   topicData: [],
 };
@@ -27,6 +28,11 @@ const reducer = (state, action) => {
         ...state,
         photoSelected: action.payload.photo,
       };
+    case "SET_TOPIC_SELECTED":
+    return {
+        ...state,
+        topicSelected: action.payload.topic.id,
+      };
     case "CLOSE_PHOTO_DETAILS_MODAL":
       return {
         ...state,
@@ -42,19 +48,26 @@ const reducer = (state, action) => {
 const useApplicationData = () => {
   const { sayWow } = useWow();
 
-  useEffect(() => {
-    fetch("/api/photos")
-      .then((response) => response.json())
-      .then((data) => dispatch({ type: "SET_PHOTO_DATA", payload: data }))
-  }, []);
-
-  useEffect(() => {
-    fetch("/api/topics")
-      .then((response) => response.json())
-      .then((data) => dispatch({ type: "SET_TOPIC_DATA", payload: data }))
-  }, []);
-
   const [state, dispatch] = useReducer(reducer, initialState);
+
+  useEffect(() => {
+    Promise.all([
+      fetch("/api/photos").then((response) => response.json()),
+      fetch("/api/topics").then((response) => response.json())
+    ])
+    .then(([photoData, topicData]) => {
+      dispatch({ type: "SET_PHOTO_DATA", payload: photoData });
+      dispatch({ type: "SET_TOPIC_DATA", payload: topicData });
+    })
+  }, []);
+  
+  useEffect(() => {
+    if (state.topicSelected) {
+      fetch(`/api/topics/photos/${state.topicSelected}`)
+        .then((response) => response.json())
+        .then((data) => dispatch({ type: "SET_PHOTO_DATA", payload: data }));
+    }
+  }, [state.topicSelected]);
 
   const updateToFavPhotoIds = (photoId) => {
     dispatch({ type: "TOGGLE_FAVORITE", payload: { photoId } });
@@ -65,6 +78,22 @@ const useApplicationData = () => {
     dispatch({ type: "SET_PHOTO_SELECTED", payload: { photo } });
   };
 
+  const setTopicSelected = (topic) => {
+    document.title = `${topic.title}`
+    
+    const topicElements = document.querySelectorAll(".top-nav-bar__topic-list span");
+    topicElements.forEach((element) => {
+      element.style.textDecoration = "none";
+    });
+  
+    const selectedTopicElement = document.querySelector(`#root > div > div > div > div.top-nav-bar__topic-list > div:nth-child(${topic.id}) > span`);
+    if (selectedTopicElement) {
+      selectedTopicElement.style.textDecoration = "overline";
+    }
+
+    dispatch({ type: "SET_TOPIC_SELECTED", payload: { topic } });
+  };
+
   const onClosePhotoDetailsModal = () => {
     dispatch({ type: "CLOSE_PHOTO_DETAILS_MODAL" });
   };
@@ -73,6 +102,7 @@ const useApplicationData = () => {
     state,
     updateToFavPhotoIds,
     setPhotoSelected,
+    setTopicSelected,
     onClosePhotoDetailsModal,
   };
 };

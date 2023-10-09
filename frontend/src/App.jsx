@@ -11,6 +11,7 @@ const App = () => {
     state,
     updateToFavPhotoIds,
     setPhotoSelected,
+    setTopicSelected,
     onClosePhotoDetailsModal,
   } = useApplicationData();
 
@@ -21,6 +22,7 @@ const App = () => {
         toggleFavorite={updateToFavPhotoIds}
         photos={state.photoData}
         topics={state.topicData}
+        setTopicSelected={setTopicSelected}
         openPhotoView={setPhotoSelected}
       />
       {state.photoSelected && (
